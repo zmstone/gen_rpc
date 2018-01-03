@@ -246,7 +246,7 @@ init({Node}) ->
                 {ok, Socket} ->
                     case DriverMod:authenticate_server(Socket) of
                         ok ->
-                            Interval = application:get_env(?APP, keepalive_interval, 10), % 10s
+                            Interval = application:get_env(?APP, keepalive_interval, 60), % 60s
                             StatFun = fun() ->
                                         case DriverMod:getstat(Socket, [recv_oct]) of
                                             {ok, [{recv_oct, RecvOct}]} -> {ok, RecvOct};
