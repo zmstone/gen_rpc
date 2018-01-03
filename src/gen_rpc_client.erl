@@ -303,7 +303,8 @@ handle_call(Msg, _Caller, #state{socket=Socket, driver=Driver} = State) ->
 
 %% This is the actual CAST handler for CAST
 handle_cast({{cast,_M,_F,_A} = PacketTuple, SendTO}, State) ->
-    send_cast(PacketTuple, State, SendTO, false);
+    %%send_cast(PacketTuple, State, SendTO, false);
+    send_cast(PacketTuple, State, SendTO, true);
 
 %% This is the actual CAST handler for ABCAST
 handle_cast({{abcast,_Name,_Msg} = PacketTuple, undefined}, State) ->
