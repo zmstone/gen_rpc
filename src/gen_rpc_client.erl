@@ -399,7 +399,8 @@ handle_info(Msg, #state{socket=Socket, driver=Driver} = State) ->
 code_change(_OldVsn, State, _Extra) ->
     {ok, State}.
 
-terminate(_Reason, _State) ->
+terminate(_Reason, #state{keepalive=KeepAlive}) ->
+    gen_rpc_keepalive:cancel(KeepAlive),
     ok.
 
 %%% ===================================================
