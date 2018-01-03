@@ -436,7 +436,7 @@ send_ping(#state{socket=Socket, driver=Driver, driver_mod=DriverMod} = State) ->
             ?log(debug, "message=ping event=transmission_succeeded driver=~s socket=\"~s\"",
                  [Driver, gen_rpc_helper:socket_to_string(Socket)]),
             %% We should keep this flag same as previous
-            %% ok = DriverMod:activate_socket(Socket),
+            ok = DriverMod:activate_socket(Socket),
             {noreply, State, gen_rpc_helper:get_inactivity_timeout(?MODULE)}
     end.
 

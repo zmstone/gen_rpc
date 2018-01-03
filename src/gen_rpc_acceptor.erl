@@ -185,8 +185,9 @@ waiting_for_data(info, {Driver,Socket,Data},
             ok = DriverMod:activate_socket(Socket),
             waiting_for_data(info, {sbcast, Caller, Reply}, State);
         ping ->
-            ?log(debug, "event=erroneous_data_received driver=~s socket=\"~s\" peer=\"~s\"",
+            ?log(debug, "event=ping_received driver=~s socket=\"~s\" peer=\"~s\" action=ignore",
                  [Driver, gen_rpc_helper:socket_to_string(Socket), gen_rpc_helper:peer_to_string(Peer)]),
+            ok = DriverMod:activate_socket(Socket),
             {keep_state_and_data, gen_rpc_helper:get_inactivity_timeout(?MODULE)};
         OtherData ->
             ?log(debug, "event=erroneous_data_received driver=~s socket=\"~s\" peer=\"~s\" data=\"~p\"",

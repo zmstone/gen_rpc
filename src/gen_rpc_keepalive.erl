@@ -23,7 +23,7 @@
 
 -author("Feng Lee <feng@emqtt.io>").
 
--export([start/3, check/1, cancel/1]).
+-export([start/3, check/1, cancel/1, resume/1]).
 
 -record(keepalive, {statfun :: function(),
                     statval :: integer(),
