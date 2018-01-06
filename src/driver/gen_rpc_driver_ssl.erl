@@ -35,7 +35,8 @@
         copy_sock_opts/2,
         set_controlling_process/2,
         set_send_timeout/2,
-        set_acceptor_opts/1]).
+        set_acceptor_opts/1,
+        getstat/2]).
 
 %%% ===================================================
 %%% Public API
@@ -206,6 +207,10 @@ set_acceptor_opts(Socket) when is_tuple(Socket) ->
     ok = set_socket_keepalive(os:type(), Socket),
     ok = ssl:setopts(Socket, [{send_timeout, gen_rpc_helper:get_send_timeout(undefined)}]),
     ok.
+
+-spec getstat(ssl:sslsocket(), list()) -> ok | {error, any()}.
+getstat(Socket, OptNames) ->
+    ssl:getstat(Socket, OptNames).
 
 %%% ===================================================
 %%% Private functions
