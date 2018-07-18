@@ -63,14 +63,13 @@ listen(Port) when is_integer(Port) ->
     SslOpts = merge_ssl_options(server, undefined),
     ssl:listen(Port, SslOpts).
 
--spec accept(ssl:sslsocket()) -> ok | {error, term()}.
+-spec accept(ssl:sslsocket()) -> {ok, ssl:sslsocket()} | {error, term()}.
 accept(Socket) when is_tuple(Socket) ->
     {ok, TSocket} = ssl:transport_accept(Socket, infinity),
-    case ssl:ssl_accept(TSocket) of
-        ok ->
-            {ok, TSocket};
-        Error ->
-            Error
+    case ssl:handshake(TSocket) of
+        {ok, SslSocket} ->
+            {ok, SslSocket};
+        Error -> Error
     end.
 
 -spec send(ssl:sslsocket(), binary()) -> ok | {error, term()}.

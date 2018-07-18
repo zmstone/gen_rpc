@@ -58,7 +58,7 @@ connect(Node, Port) when is_atom(Node) ->
 listen(Port) when is_integer(Port) ->
     gen_tcp:listen(Port, ?TCP_DEFAULT_OPTS).
 
--spec accept(port()) -> ok | {error, term()}.
+-spec accept(port()) -> {ok, inet:socket()} | {error, term()}.
 accept(Socket) when is_port(Socket) ->
     gen_tcp:accept(Socket, infinity).
 

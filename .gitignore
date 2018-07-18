@@ -22,3 +22,4 @@ logs
 _build
 rebar
 *.crashdump
+.exrc
