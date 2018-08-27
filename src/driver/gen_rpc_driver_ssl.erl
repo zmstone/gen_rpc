@@ -13,7 +13,7 @@
 -behaviour(gen_rpc_driver).
 
 %%% Include the HUT library
--include_lib("hut/include/hut.hrl").
+-include("hut.hrl").
 %%% Include this library's name macro
 -include("app.hrl").
 %%% Include SSL macros

@@ -11,7 +11,7 @@
 -behaviour(supervisor).
 
 %%% Include the HUT library
--include_lib("hut/include/hut.hrl").
+-include("hut.hrl").
 
 %%% Supervisor functions
 -export([start_link/0, start_child/2, stop_child/1]).
