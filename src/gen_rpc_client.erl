@@ -13,7 +13,7 @@
 -behaviour(gen_server).
 
 %%% Include the HUT library
--include_lib("hut/include/hut.hrl").
+-include("hut.hrl").
 %%% Include this library's name macro
 -include("app.hrl").
 %%% Include helpful guard macros
