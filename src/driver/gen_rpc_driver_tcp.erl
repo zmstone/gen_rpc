@@ -13,7 +13,7 @@
 -behaviour(gen_rpc_driver).
 
 %%% Include the HUT library
--include("hut.hrl").
+-include("logger.hrl").
 %%% Include this library's name macro
 -include("app.hrl").
 %%% Include TCP macros
@@ -64,7 +64,7 @@ accept(Socket) when is_port(Socket) ->
 
 -spec activate_socket(port()) -> ok.
 activate_socket(Socket) when is_port(Socket) ->
-    ok = inet:setopts(Socket, [{active,once}]),
+    ok = inet:setopts(Socket, [{active,true}]),
     ok.
 
 -spec send(port(), binary()) -> ok | {error, term()}.
