@@ -23,6 +23,12 @@
 %%% Include helpful guard macros
 -include("guards.hrl").
 
+-ifdef(OTP_RELEASE).
+-if(?OTP_RELEASE > 20).
+-define(USE_SSL_HANDSHAKE, true).
+-endif.
+-endif.
+
 %%% Public API
 -export([connect/2,
         listen/1,
@@ -62,7 +68,18 @@ listen(Port) when is_integer(Port) ->
     SslOpts = merge_ssl_options(server, undefined),
     ssl:listen(Port, SslOpts).
 
--spec accept(ssl:sslsocket()) -> ok | {error, term()}.
+-ifdef(USE_SSL_HANDSHAKE).
+-spec accept(ssl:sslsocket()) -> {ok, ssl:sslsocket()} | {error, term()}.
+accept(Socket) when is_tuple(Socket) ->
+    {ok, TSocket} = ssl:transport_accept(Socket, infinity),
+    case ssl:handshake(TSocket) of
+        {ok, SslSocket} ->
+            {ok, SslSocket};
+        Error ->
+            Error
+    end.
+-else.
+-spec accept(ssl:sslsocket()) -> {ok, ssl:sslsocket()} | {error, term()}.
 accept(Socket) when is_tuple(Socket) ->
     {ok, TSocket} = ssl:transport_accept(Socket, infinity),
     case ssl:ssl_accept(TSocket) of
@@ -71,6 +88,7 @@ accept(Socket) when is_tuple(Socket) ->
         Error ->
             Error
     end.
+-endif.
 
 -spec send(ssl:sslsocket(), binary()) -> ok | {error, term()}.
 send(Socket, Data) when is_tuple(Socket), is_binary(Data) ->
